@@ -3,3 +3,8 @@ composer.phar
 .idea/
 web/data.json
 web/swagger-ui/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
