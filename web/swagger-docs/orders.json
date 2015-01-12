@@ -1,0 +1,113 @@
+{
+    "basePath": "/",
+    "swaggerVersion": "1.2",
+    "apiVersion": "1.0.0",
+    "resourcePath": "/orders",
+    "apis": [
+        {
+            "path": "/orders",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get list of orders",
+                    "nickname": "get",
+                    "type": "array[Order]",
+                    "parameters": [
+                        {
+                            "paramType": "query",
+                            "name": "q",
+                            "type": "string",
+                            "required": false,
+                            "allowMultiple": false,
+                            "description": "Search query"
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "summary": "Creates a new order",
+                    "nickname": "post",
+                    "type": "Order",
+                    "parameters": [
+                        {
+                            "paramType": "body",
+                            "name": "body",
+                            "type": "Order",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Order object"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Invalid data"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/orders/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Retrieves an order by ID",
+                    "nickname": "get",
+                    "type": "Order",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "type": "number",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "ID of the order to be fetched"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "Could not locate Order"
+                        }
+                    ]
+                },
+                {
+                    "method": "DELETE",
+                    "summary": "Deletes an order by ID",
+                    "nickname": "delete",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "type": "number",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "ID of the order to be deleted"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "Could not locate Order"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Order": {
+            "id": "Order",
+            "description": "Class Order",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
