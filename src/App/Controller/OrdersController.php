@@ -16,7 +16,7 @@ use App\Model\Order;
  * @package App\Controller
  *
  * @SWG\Resource(
- *     apiVersion="1.0.0",
+ *     apiVersion="1",
  *     basePath="/",
  *     resourcePath="/orders"
  * )
@@ -61,7 +61,7 @@ class OrdersController implements ControllerProviderInterface
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      *
      * @SWG\Api(
-     *   path="/orders",
+     *   path="/v1/orders",
      *   @SWG\Operation(
      *      summary="Get list of orders",
      *      method="GET",
@@ -78,7 +78,7 @@ class OrdersController implements ControllerProviderInterface
      * )
      *
      * @SWG\Api(
-     *   path="/orders/{id}",
+     *   path="/v1/orders/{id}",
      *   @SWG\Operation(
      *      summary="Retrieves an order by ID",
      *      method="GET",
@@ -127,7 +127,7 @@ class OrdersController implements ControllerProviderInterface
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @SWG\Api(
-     *   path="/orders",
+     *   path="/v1/orders",
      *   @SWG\Operation(
      *      summary="Creates a new order",
      *      method="POST",
@@ -174,7 +174,7 @@ class OrdersController implements ControllerProviderInterface
      * @return Response
      *
      * @SWG\Api(
-     *   path="/orders/{id}",
+     *   path="/v1/orders/{id}",
      *   @SWG\Operation(
      *      summary="Deletes an order by ID",
      *      method="DELETE",
@@ -212,6 +212,32 @@ class OrdersController implements ControllerProviderInterface
      * @param Request $request
      * @param $id
      * @return Response
+     *
+     * @SWG\Api(
+     *   path="/v1/orders/{id}",
+     *   @SWG\Operation(
+     *      summary="Updates an order by ID",
+     *      method="PUT",
+     *      @SWG\Parameter(
+     *          name="id",
+     *          description="ID of the order to be updated",
+     *          paramType="path",
+     *          required=true,
+     *          allowMultiple=false,
+     *          type="number"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="body",
+     *          description="Order object",
+     *          paramType="body",
+     *          required=true,
+     *          allowMultiple=false,
+     *          type="Order"
+     *      ),
+     *      @SWG\ResponseMessage(code=400, message="Invalid data"),
+     *      @SWG\ResponseMessage(code=404, message="Could not locate Order")
+     *   )
+     * )
      */
     public function put(Application $app, Request $request, $id)
     {
@@ -219,7 +245,7 @@ class OrdersController implements ControllerProviderInterface
             if (($data = json_decode($request->getContent()))) {
                 if (trim($data->name)) {
                     // edit entry
-                    $this->data[$id]['name'] = trim($data->name);
+                    $this->data[$id]->name = trim($data->name);
 
                     // save data
                     $this->saveData();
@@ -233,7 +259,7 @@ class OrdersController implements ControllerProviderInterface
         }
 
         // invalid key
-        throw new NotFoundHttpException(sprintf('Could not locate Order (id = %d)', $id));
+        throw new NotFoundHttpException('Could not locate Order');
     }
 
     /**

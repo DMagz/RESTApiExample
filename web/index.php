@@ -16,6 +16,6 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app['debug'] = false;
 
 // mount modules
-$app->mount(null, new \App\Controller\OrdersController());
+$app->mount('/v1/', new \App\Controller\OrdersController());
 
 $app->run();
